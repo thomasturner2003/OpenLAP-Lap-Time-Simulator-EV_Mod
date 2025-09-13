@@ -1,0 +1,16 @@
+Overall Goal:
+Create an endurance capable simulator
+
+Electro-thermal profiling
+	- Record power demands throughout the lap
+	- Export power profile in .mat format
+
+Electro-Thermal modelling
+	- model battery SOC change through the power profile
+	- model battery temperature change through the power profile
+	- model motor temperature change through the power profile
+	- model inverter temperature change through the power profile
+
+Multi-Lap modelling
+	- update electro-thermal states from lap to lap
+	- automatically derate based on thermal limits through excel policy

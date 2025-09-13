@@ -39,7 +39,7 @@ fclose('all') ;
 
 %% Vehicle file selection
 
-filename = 'Formula 1.xlsx' ;
+filename = 'Formula 1 mod.xlsx' ; % Cannot be open in excel to work
 
 %% Reading vehicle file
 
@@ -90,8 +90,6 @@ CF = str2double(table2array(info(i,2))) ; i = i+1 ; % [N/deg]
 CR = str2double(table2array(info(i,2))) ; i = i+1 ; % [N/deg]
 % engine
 factor_power = str2double(table2array(info(i,2))) ; i = i+1 ;
-n_thermal = str2double(table2array(info(i,2))) ; i = i+1 ;
-fuel_LHV = str2double(table2array(info(i,2))) ; i = i+1 ; % [J/kg]
 % drivetrain
 drive = table2array(info(i,2)) ; i = i+1 ;
 shift_time = str2double(table2array(info(i,2))) ; i = i+1 ; % [s]

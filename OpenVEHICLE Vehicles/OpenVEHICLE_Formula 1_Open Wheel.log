@@ -1,0 +1,27 @@
+_______                    ___    ________________  ________________________________
+__  __ \_____________________ |  / /__  ____/__  / / /___  _/_  ____/__  /___  ____/
+_  / / /__  __ \  _ \_  __ \_ | / /__  __/  __  /_/ / __  / _  /    __  / __  __/   
+/ /_/ /__  /_/ /  __/  / / /_ |/ / _  /___  _  __  / __/ /  / /___  _  /___  /___   
+\____/ _  .___/\___//_/ /_/_____/  /_____/  /_/ /_/  /___/  \____/  /_____/_____/   
+       /_/                                                                          
+====================================================================================
+Formula 1 mod.xlsx
+File read successfully
+====================================================================================
+Name: Formula 1
+Type: Open Wheel
+Date: 13/09/2025
+Time: 14:55:13
+====================================================================================
+Vehicle generation started.
+Braking model generated successfully.
+Steering model generated successfully.
+Driveline model generated successfully.
+{Error using <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('table', 'C:\Program Files\MATLAB\R2025a\toolbox\matlab\datatypes\tabular\@table\table.m', 173)" style="font-weight:bold">table</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2025a\toolbox\matlab\datatypes\tabular\@table\table.m',173,0)">line 173</a>)
+The RowNames property must contain one name for each row in the table.
+
+Error in <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('OpenVEHICLE', 'C:\Users\thoma\OneDrive\Documents\GitHub\OpenLAP-Lap-Time-Simulator-EV_Mod\OpenVEHICLE.m', 224)" style="font-weight:bold">OpenVEHICLE</a> (<a href="matlab: opentoline('C:\Users\thoma\OneDrive\Documents\GitHub\OpenLAP-Lap-Time-Simulator-EV_Mod\OpenVEHICLE.m',224,0)">line 224</a>)
+shifting = table(shift_points,arrive_points,rev_drops,'RowNames',rownames) ;
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+OpenVEHICLE

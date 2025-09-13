@@ -49,7 +49,7 @@ tic
 %% Filenames
 
 trackfile = 'OpenTRACK Tracks/OpenTRACK_Spa-Francorchamps_Closed_Forward.mat' ;
-vehiclefile = 'OpenVEHICLE Vehicles/OpenVEHICLE_Formula 1_Open Wheel.mat' ;
+vehiclefile = 'OpenVEHICLE Vehicles/OpenVEHICLE_Formula 1 mod_Open Wheel.mat' ;
 
 %% Loading circuit
 
@@ -500,8 +500,6 @@ function [sim] = simulate(veh,tr,simname,logid)
     engine_power = TPS.*interp1(veh.vehicle_speed,veh.engine_power,V,'linear','extrap') ;
     engine_speed = interp1(veh.vehicle_speed,veh.engine_speed,V,'linear','extrap') ;
     gear = interp1(veh.vehicle_speed,veh.gear,V,'nearest','extrap') ;
-    fuel_cons = cumsum(wheel_torque/veh.tyre_radius.*tr.dx/veh.n_primary/veh.n_gearbox/veh.n_final/veh.n_thermal/veh.fuel_LHV) ;
-    fuel_cons_total = fuel_cons(end) ;
     % HUD
     disp('Engine metrics calculated.')
     fprintf(logid,'%s\n','Engine metrics calculated.') ;
@@ -516,8 +514,6 @@ function [sim] = simulate(veh,tr,simname,logid)
     for i=1:veh.nog
         percent_in_gear(i) = sum(gear==i)/tr.n*100 ;
     end
-    energy_spent_fuel = fuel_cons*veh.fuel_LHV ;
-    energy_spent_mech = energy_spent_fuel*veh.n_thermal ;
     gear_shifts = sum(abs(diff(gear))) ;
     [~,i] = max(abs(AY)) ;
     ay_max = AY(i) ;
@@ -605,10 +601,6 @@ function [sim] = simulate(veh,tr,simname,logid)
     sim.engine_speed.unit = 'rpm' ;
     sim.gear.data = gear ;
     sim.gear.unit = [] ;
-    sim.fuel_cons.data = fuel_cons ;
-    sim.fuel_cons.unit = 'kg' ;
-    sim.fuel_cons_total.data = fuel_cons_total ;
-    sim.fuel_cons_total.unit = 'kg' ;
     sim.laptime.data = laptime ;
     sim.laptime.unit = 's' ;
     sim.sector_time.data = sector_time ;
@@ -631,10 +623,6 @@ function [sim] = simulate(veh,tr,simname,logid)
     sim.v_max.unit = 'm/s' ;
     sim.v_ave.data = mean(V) ;
     sim.v_ave.unit = 'm/s' ;
-    sim.energy_spent_fuel.data = energy_spent_fuel ;
-    sim.energy_spent_fuel.unit = 'J' ;
-    sim.energy_spent_mech.data = energy_spent_mech ;
-    sim.energy_spent_mech.unit = 'J' ;
     sim.gear_shifts.data = gear_shifts ;
     sim.gear_shifts.unit = [] ;
     sim.lat_acc_max.data = ay_max ;

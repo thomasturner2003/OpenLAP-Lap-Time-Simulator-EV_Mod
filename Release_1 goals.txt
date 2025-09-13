@@ -1,0 +1,8 @@
+Overall goal:
+Create a lap-time simulator for an electric vehicle
+
+Drivetrain fix
+	- Remove all gearing and gear shifting 
+	- Remove all fuel references
+	
+	
