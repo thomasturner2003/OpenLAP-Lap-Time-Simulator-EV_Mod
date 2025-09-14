@@ -7,8 +7,8 @@ _  / / /__  __ \  _ \_  __ \_  / __  /| |_  /_/ /
 =================================================
 Vehicle: OUR5
 Track:   Spa-Francorchamps
-Date:    13/09/2025
-Time:    20:39:13
+Date:    14/09/2025
+Time:    14:05:30
 =================================================
 Simulation started.
 Maximum speed calculated at all points.
@@ -7207,7 +7207,7 @@ ________________________________________________
      20	   2325	      2	 2324.0	  30.24	  30.24
 ________________________________________________
 Velocity profile calculated successfully.
-Solver time is: 0.932029 [s]
+Solver time is: 1.034134 [s]
 Post-processing initialised.
 Correct solution selected from modes.
 Laptime calculated.
@@ -7227,4 +7227,4 @@ Sector   3:  71.091 [s]
 Plots created and saved.
 Export initialised.
 Exported .csv file successfully.
-Elapsed time is: 4.913263 [s]
+Elapsed time is: 6.028825 [s]

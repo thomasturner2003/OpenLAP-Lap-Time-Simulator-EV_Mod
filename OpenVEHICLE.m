@@ -90,6 +90,7 @@ CF = str2double(table2array(info(i,2))) ; i = i+1 ; % [N/deg]
 CR = str2double(table2array(info(i,2))) ; i = i+1 ; % [N/deg]
 % engine
 factor_power = str2double(table2array(info(i,2))) ; i = i+1 ;
+power_limit = str2double(table2array(info(i,2))) ; i = i+1;
 % drivetrain
 drive = table2array(info(i,2)) ; i = i+1 ;
 shift_time = str2double(table2array(info(i,2))) ; i = i+1 ; % [s]
@@ -147,7 +148,7 @@ disp('Steering model generated successfully.')
 
 % fetching engine curves
 en_speed_curve = table2array(data(:,1)) ; % [rpm]
-en_torque_curve = table2array(data(:,2)) ; % [N*m]
+en_torque_curve = table2array(data(:,3)) ; % [N*m]
 en_power_curve = en_torque_curve.*en_speed_curve*2*pi/60 ; % [W]
 % memory preallocation
 % wheel speed per gear for every engine speed value
@@ -426,20 +427,20 @@ function [data] = read_torque_curve(workbookFile,sheetName,startRow,endRow)
         endRow = 10000;
     end
     % Setup the Import Options
-    opts = spreadsheetImportOptions("NumVariables", 2);
+    opts = spreadsheetImportOptions("NumVariables", 3);
     % Specify sheet and range
     opts.Sheet = sheetName;
-    opts.DataRange = "A" + startRow(1) + ":B" + endRow(1);
+    opts.DataRange = "A" + startRow(1) + ":C" + endRow(1);
     % Specify column names and types
-    opts.VariableNames = ["Engine_Speed_rpm", "Torque_Nm"];
-    opts.VariableTypes = ["double", "double"];
+    opts.VariableNames = ["Engine_Speed_rpm", "Peak_Torque_Nm", "Regulated_Torque_Nm"];
+    opts.VariableTypes = ["double", "double", "double"];
     % Setup rules for import
     opts.MissingRule = "omitrow";
-    opts = setvaropts(opts, [1, 2], "TreatAsMissing", '');
+    opts = setvaropts(opts, [1, 3], "TreatAsMissing", '');
     % Import the data
     data = readtable(workbookFile, opts, "UseExcel", false);
     for idx = 2:length(startRow)
-        opts.DataRange = "A" + startRow(idx) + ":B" + endRow(idx);
+        opts.DataRange = "A" + startRow(idx) + ":C" + endRow(idx);
         tb = readtable(workbookFile, opts, "UseExcel", false);
         data = [data; tb]; %#ok<AGROW>
     end

@@ -13,7 +13,7 @@ Motor Modelling
     - Thermal modelling using power use and efficiency
 
 Inverter Modelling
-    - Efficiency based on power requirme
+    - Efficiency based on power require
 
 Cooling Modelling
     - NTU based cooling on all core components
