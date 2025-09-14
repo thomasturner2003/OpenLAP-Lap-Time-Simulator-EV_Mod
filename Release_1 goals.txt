@@ -4,11 +4,11 @@ Create a lap-time dynamic simulator for an electric vehicle over endurance
 Drivetrain fix
 	- Remove gear shifting 
 	- Remove all fuel references
-	
-Electro-thermal profiling
+
+Profiling
 	- Record power demands throughout the lap
 	- Export power profile
+Note:
 
-Key changes:
-
-OpenVehicle motor power profile (instead of just torque)
+This is largely an unedited version of the initial software
+"Power" is from output of motor (excludes gearing)

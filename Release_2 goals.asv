@@ -24,9 +24,8 @@ Multi-Lap modelling
     - excel derating policy option
 
 Key assumption
-    - The properties from lap to lap can be approximated as constant
+    - The properties from lap to lap can be appro
 
 Key changes
 Creation of OpenThermal that creates the thermal and SOC data for a given lap
-Creation of OpenMultiLap that calls OpenLap and OpenThermal in successive responses
-Use of maps, lookups and interpolation for system efficiencies 
+Creation of OpenMultiLap that calls OpenVehicle OpenLap and OpenThermal in each lap
