@@ -2,20 +2,6 @@
 %
 % OpenLAP
 %
-% Lap time simulation using a simple point mass model for a racing vehicle.
-% Instructions:
-% 1) Select a vehicle file created by OpenVEHICLE by assigning the full
-%    path to the variable "vehiclefile".
-% 2) Select a track file created by OpenTRACK by assigning the full path to
-%    the variable "trackfile".
-% 3) Select an export frequency in [Hz] by setting the variable "freq" to
-%    the desired value.
-% 4) Run the script.
-% 5) The results will appear on the command window and inside the folder
-%    "OpenLAP Sims". You can choose to include the date and time of each
-%    simulation in the result file name by changing the
-%    "use_date_time_in_name" variable to true.
-%
 % More information can be found in the "OpenLAP Laptime Simulator"
 % videos on YouTube.
 %
@@ -32,7 +18,14 @@
 % MATLAB file exchange: https://uk.mathworks.com/matlabcentral/fileexchange/
 % GitHub: https://github.com/mc12027
 %
-% April 2020.
+% Open Source MATLAB EV Expansion project created by:
+% Thomas Turner
+% The University of Oxford MEng General Engineering
+%
+% LinkedIn: https://www.linkedin.com/in/thomas-turner-370604239/
+% email: thomasturner2003@outlook.com
+% GitHub: https://github.com/thomasturner2003
+% September 2025.
 
 %% Clearing memory
 

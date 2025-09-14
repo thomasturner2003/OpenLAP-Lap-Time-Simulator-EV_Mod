@@ -1,16 +1,7 @@
 %% OpenLAP Laptime Simulation Project
 %
 % OpenVEHICLE
-%
-% Racing vehicle model file creation for use in OpenLAP and OpenDRAG.
-% Instructions:
-% 1) Select a vehicle excel file containing the vehicles information by
-%    assigning the full path to the variable "filename". Use the
-%    "OpenVEHICLE tmp.xlsx" file to create a new vehicle excel file.
-% 2) Run the script.
-% 3) The results will appear on the command window and inside the folder
-%    "OpenVEHICLE Vehicles".
-%
+
 % More information can be found in the "OpenLAP Laptime Simulator"
 % videos on YouTube.
 %
@@ -19,7 +10,7 @@
 % Open Source MATLAB project created by:
 %
 % Michael Halkiopoulos
-% Cranfield University Advanced Motorsport MSc Engineer
+% Cranfield University MSc Advanced Motorsport Engineer
 % National Technical University of Athens MEng Mechanical Engineer
 %
 % LinkedIn: https://www.linkedin.com/in/michael-halkiopoulos/
@@ -27,8 +18,14 @@
 % MATLAB file exchange: https://uk.mathworks.com/matlabcentral/fileexchange/
 % GitHub: https://github.com/mc12027
 %
-% April 2020.
-
+% Open Source MATLAB EV Expansion project created by:
+% Thomas Turner
+% The University of Oxford MEng General Engineering
+%
+% LinkedIn: https://www.linkedin.com/in/thomas-turner-370604239/
+% email: thomasturner2003@outlook.com
+% GitHub: https://github.com/thomasturner2003
+% September 2025.
 %% Clearing Memory
 
 clear
@@ -150,6 +147,7 @@ disp('Steering model generated successfully.')
 en_speed_curve = table2array(data(:,1)) ; % [rpm]
 en_torque_curve = table2array(data(:,3)) ; % [N*m]
 en_power_curve = en_torque_curve.*en_speed_curve*2*pi/60 ; % [W]
+en_efficiency_curve = table2array(data(:,4));
 % memory preallocation
 % wheel speed per gear for every engine speed value
 wheel_speed_gear = zeros(length(en_speed_curve),nog) ;
@@ -348,23 +346,18 @@ ylabel('Engine Torque [Nm]')
 grid on
 xlim([en_speed_curve(1),en_speed_curve(end)])
 yyaxis right
-plot(en_speed_curve,factor_power*en_power_curve/745.7)
-ylabel('Engine Power [Hp]')
+plot(en_speed_curve,factor_power*en_power_curve/1000)
+ylabel('Engine Power [kW]')
 
-% gearing
+% efficiency curve
 subplot(rows,cols,3)
 hold on
-title('Gearing')
-xlabel('Speed [m/s]')
-yyaxis left
-plot(vehicle_speed,engine_speed)
-ylabel('Engine Speed [rpm]')
+title('Efficiency Curve')
+xlabel('Engine Speed [rpm]')
+plot(en_speed_curve,100*en_efficiency_curve)
+ylabel('System Efficiecy [%]')
 grid on
-xlim([vehicle_speed(1),vehicle_speed(end)])
-yyaxis right
-plot(vehicle_speed,gear)
-ylabel('Gear [-]')
-ylim([gear(1)-1,gear(end)+1])
+xlim([en_speed_curve(1),en_speed_curve(end)])
 
 % traction model
 subplot(rows,cols,[5,7])
@@ -383,7 +376,6 @@ xlabel('Speed [m/s]')
 ylabel('Force [N]')
 xlim([vehicle_speed(1),vehicle_speed(end)])
 legend({'Engine tractive force','Final tractive force','Aero drag','Rolling resistance','Max tyre tractive force','Engine tractive force per gear'},'Location','southoutside')
-
 % ggv map
 subplot(rows,cols,[2,4,6,8])
 hold on
@@ -427,20 +419,20 @@ function [data] = read_torque_curve(workbookFile,sheetName,startRow,endRow)
         endRow = 10000;
     end
     % Setup the Import Options
-    opts = spreadsheetImportOptions("NumVariables", 3);
+    opts = spreadsheetImportOptions("NumVariables", 4);
     % Specify sheet and range
     opts.Sheet = sheetName;
-    opts.DataRange = "A" + startRow(1) + ":C" + endRow(1);
+    opts.DataRange = "A" + startRow(1) + ":D" + endRow(1);
     % Specify column names and types
-    opts.VariableNames = ["Engine_Speed_rpm", "Peak_Torque_Nm", "Regulated_Torque_Nm"];
-    opts.VariableTypes = ["double", "double", "double"];
+    opts.VariableNames = ["Engine_Speed_rpm", "Peak_Torque_Nm", "Regulated_Torque_Nm", "System Efficiency"];
+    opts.VariableTypes = ["double", "double", "double", "double"];
     % Setup rules for import
     opts.MissingRule = "omitrow";
-    opts = setvaropts(opts, [1, 3], "TreatAsMissing", '');
+    opts = setvaropts(opts, [1, 4], "TreatAsMissing", '');
     % Import the data
     data = readtable(workbookFile, opts, "UseExcel", false);
     for idx = 2:length(startRow)
-        opts.DataRange = "A" + startRow(idx) + ":C" + endRow(idx);
+        opts.DataRange = "A" + startRow(idx) + ":D" + endRow(idx);
         tb = readtable(workbookFile, opts, "UseExcel", false);
         data = [data; tb]; %#ok<AGROW>
     end

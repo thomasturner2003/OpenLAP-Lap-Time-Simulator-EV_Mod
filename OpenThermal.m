@@ -1,6 +1,6 @@
 %% OpenLAP Laptime Simulation Project
 %
-% OpenThermal
+% OpenTHERMAL
 %
 % More information can be found in the "OpenLAP Laptime Simulator"
 % videos on YouTube.
