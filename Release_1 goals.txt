@@ -1,8 +1,14 @@
 Overall goal:
-Create a lap-time simulator for an electric vehicle
+Create a lap-time dynamic simulator for an electric vehicle over endurance
 
 Drivetrain fix
-	- Remove all gearing and gear shifting 
+	- Remove gear shifting 
 	- Remove all fuel references
 	
-	
+Electro-thermal profiling
+	- Record power demands throughout the lap
+	- Export power profile
+
+Key changes:
+
+OpenVehicle motor power profile (instead of just torque)

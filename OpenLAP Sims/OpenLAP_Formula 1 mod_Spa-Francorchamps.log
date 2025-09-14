@@ -8,7 +8,7 @@ _  / / /__  __ \  _ \_  __ \_  / __  /| |_  /_/ /
 Vehicle: Formula 1 mod
 Track:   Spa-Francorchamps
 Date:    13/09/2025
-Time:    15:53:06
+Time:    16:12:15
 =================================================
 Simulation started.
 Maximum speed calculated at all points.
@@ -7370,7 +7370,7 @@ ________________________________________________
      25	   3734	      2	 3733.0	  86.47	  86.51
 ________________________________________________
 Velocity profile calculated successfully.
-Solver time is: 0.419633 [s]
+Solver time is: 0.495080 [s]
 Post-processing initialised.
 Correct solution selected from modes.
 Laptime calculated.
@@ -7390,4 +7390,4 @@ Sector   3:  31.816 [s]
 Plots created and saved.
 Export initialised.
 Exported .csv file successfully.
-Elapsed time is: 1.990862 [s]
+Elapsed time is: 2.203872 [s]

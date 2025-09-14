@@ -47,7 +47,7 @@ total_timer = tic ;
 %% Loading vehicle
 
 % filename
-vehiclefile = 'OpenVEHICLE Vehicles/OpenVEHICLE_Formula 1_Open Wheel.mat' ;
+vehiclefile = 'OpenVEHICLE Vehicles/OpenVEHICLE_OUR5_Open Wheel.mat' ;
 
 %% Simulation settings
 
@@ -56,7 +56,7 @@ use_date_time_in_name = false ;
 % time step
 dt = 1E-3 ;
 % maximum simulation time for memory preallocation
-t_max = 60 ;
+t_max = 7 ;
 % acceleration sensitivity for drag limitation
 ax_sens = 0.05 ; % [m/s2]
 % speed traps
