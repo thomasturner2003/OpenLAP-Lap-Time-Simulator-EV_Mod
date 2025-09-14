@@ -492,6 +492,7 @@ function [sim] = simulate(veh,tr,simname,logid)
     engine_torque = TPS.*interp1(veh.vehicle_speed,veh.engine_torque,V,'linear','extrap') ;
     engine_power = TPS.*interp1(veh.vehicle_speed,veh.engine_power,V,'linear','extrap') ;
     engine_speed = interp1(veh.vehicle_speed,veh.engine_speed,V,'linear','extrap') ;
+    engine_efficiency = interp1(veh.vehicle_speed,veh.engine_efficiency,V,'linear','extrap') ;
     gear = interp1(veh.vehicle_speed,veh.gear,V,'nearest','extrap') ;
     % HUD
     disp('Engine metrics calculated.')
@@ -592,6 +593,8 @@ function [sim] = simulate(veh,tr,simname,logid)
     sim.engine_power.unit = 'W' ;
     sim.engine_speed.data = engine_speed ;
     sim.engine_speed.unit = 'rpm' ;
+    sim.engine_efficiency.data = engine_efficiency;
+    sim.engine_efficiency.unit = [];
     sim.gear.data = gear ;
     sim.gear.unit = [] ;
     sim.laptime.data = laptime ;

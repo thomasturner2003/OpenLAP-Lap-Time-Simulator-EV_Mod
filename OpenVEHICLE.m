@@ -196,6 +196,8 @@ wheel_torque = fx_engine*tyre_radius ;
 engine_torque = wheel_torque/ratio_final./ratio_gearbox(gear)/ratio_primary/n_primary/n_gearbox/n_final ;
 % engine power
 engine_power = engine_torque.*engine_speed*2*pi/60 ;
+% engine efficiency
+engine_efficiency = interp1(en_speed_curve, en_efficiency_curve, engine_speed, 'linear', 'extrap');
 % HUD
 disp('Driveline model generated successfully.')
 

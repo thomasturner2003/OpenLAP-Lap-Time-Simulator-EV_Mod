@@ -196,6 +196,8 @@ wheel_torque = fx_engine*tyre_radius ;
 engine_torque = wheel_torque/ratio_final./ratio_gearbox(gear)/ratio_primary/n_primary/n_gearbox/n_final ;
 % engine power
 engine_power = engine_torque.*engine_speed*2*pi/60 ;
+% engine efficiency
+engine_efficiency = 
 % HUD
 disp('Driveline model generated successfully.')
 
@@ -349,20 +351,15 @@ yyaxis right
 plot(en_speed_curve,factor_power*en_power_curve/1000)
 ylabel('Engine Power [kW]')
 
-% gearing
+% efficiency curve
 subplot(rows,cols,3)
 hold on
-title('Gearing')
-xlabel('Speed [m/s]')
-yyaxis left
-plot(vehicle_speed,engine_speed)
-ylabel('Engine Speed [rpm]')
+title('Efficiency Curve')
+xlabel('Engine Speed [rpm]')
+plot(en_speed_curve,100*en_efficiency_curve)
+ylabel('System Efficiecy [%]')
 grid on
-xlim([vehicle_speed(1),vehicle_speed(end)])
-yyaxis right
-plot(vehicle_speed,gear)
-ylabel('Gear [-]')
-ylim([gear(1)-1,gear(end)+1])
+xlim([en_speed_curve(1),en_speed_curve(end)])
 
 % traction model
 subplot(rows,cols,[5,7])
@@ -381,7 +378,6 @@ xlabel('Speed [m/s]')
 ylabel('Force [N]')
 xlim([vehicle_speed(1),vehicle_speed(end)])
 legend({'Engine tractive force','Final tractive force','Aero drag','Rolling resistance','Max tyre tractive force','Engine tractive force per gear'},'Location','southoutside')
-plot()
 % ggv map
 subplot(rows,cols,[2,4,6,8])
 hold on
