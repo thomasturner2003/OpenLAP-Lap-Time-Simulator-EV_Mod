@@ -56,7 +56,7 @@ use_date_time_in_name = false ;
 % time step
 dt = 1E-3 ;
 % maximum simulation time for memory preallocation
-t_max = 7 ;
+t_max = 5 ;
 % acceleration sensitivity for drag limitation
 ax_sens = 0.05 ; % [m/s2]
 % speed traps
@@ -226,6 +226,8 @@ while true
     Roll_Dr = veh.Cr*(-Aero_Df+Wz) ;
     % normal load on driven wheels
     Wd = (veh.factor_drive*Wz+(-veh.factor_aero*Aero_Df))/veh.driven_wheels ;
+    % load transfer
+    Wd = Wd + (veh.M * veh.COG * a) / (veh.L*veh.driven_wheels);
     % drag acceleration
     ax_drag = (Aero_Dr+Roll_Dr+Wx)/M ;
     % rpm calculation
@@ -276,7 +278,7 @@ while true
         wheel_torque = engine_torque*rf*rg(gear)*rp*nf*ng*np ;
         ax_power_limit = 1/M*wheel_torque/Rt ;
         % final long acc
-        ax = min([ax_power_limit,ax_tyre_max_acc]) ;
+        ax = min([ax_power_limit,ax_tyre_max_acc]); 
     end
     % tps
     tps = ax/ax_power_limit ;
@@ -292,10 +294,18 @@ while true
     i = i+1 ;
 end
 i_acc = i ; % saving acceleration index
+% find event time
+for i=1:length(X)
+    if X(i) > 75
+        event_time = T(i); % record the time when the vehicle exceeds 75m
+        break
+    end
+end
 % average acceleration
 a_acc_ave = v/t ;
 disp(['Average acceleration:    ',num2str(a_acc_ave/9.81,'%6.3f'),' [G]'])
 disp(['Peak acceleration   :    ',num2str(max(A)/9.81,'%6.3f'),' [G]'])
+disp(['Acceleration event time: ',num2str(event_time, '%6.3f'), ' [s]'])
 % acceleration timer
 toc(acceleration_timer)
 

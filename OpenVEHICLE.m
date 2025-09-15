@@ -53,8 +53,9 @@ i = 3 ;
 % mass
 M = str2double(table2array(info(i,2))) ; i = i+1 ; % [kg]
 df = str2double(table2array(info(i,2)))/100 ; i = i+1 ; % [-]
-% wheelbase
-L = str2double(table2array(info(i,2)))/1000 ; i = i+1 ; % [m]
+% dimensions
+L = str2double(table2array(info(i,2)))/1000 ; i = i+1 ; % [m] Wheelbase
+COG = str2double(table2array(info(i,2)))/1000 ; i = i+1;
 % steering rack ratio
 rack = str2double(table2array(info(i,2))) ; i = i+1 ; % [-]
 % aerodynamics
