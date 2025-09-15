@@ -56,7 +56,7 @@ use_date_time_in_name = false ;
 % time step
 dt = 1E-3 ;
 % maximum simulation time for memory preallocation
-t_max = 5 ;
+t_max = 10 ;
 % acceleration sensitivity for drag limitation
 ax_sens = 0.05 ; % [m/s2]
 % speed traps
@@ -176,7 +176,7 @@ disp('|______________________|[km/h]_|__[G]__|_[rpm]_|__[#]__|__[s]__|__[m]__|__
 
 % acceleration timer start
 acceleration_timer = tic ;
-while true
+while x < 75
     % saving values
     MODE(i) = 1 ;
     T(i) = t ;
@@ -187,13 +187,7 @@ while true
     TPS(i) = tps ;
     BPS(i) = 0 ;
     GEAR(i) = gear ;
-    % checking if rpm limiter is on or if out of memory
-    if v>=veh.v_max
-        % HUD
-        fprintf('Engine speed limited\t')
-        hud(v,a,rpm,gear,t,x,t_start,x_start)
-        break
-    elseif i==N
+    if i==N
         % HUD
         disp(['Did not reach maximum speed at time ',num2str(t),' s'])
         break
@@ -203,7 +197,6 @@ while true
         % HUD
         fprintf('Drag limited        \t')
         hud(v,a,rpm,gear,t,x,t_start,x_start)
-        break
     end
     % checking speed trap
     if check_speed_traps
@@ -230,56 +223,14 @@ while true
     Wd = Wd + (veh.M * veh.COG * a) / (veh.L*veh.driven_wheels);
     % drag acceleration
     ax_drag = (Aero_Dr+Roll_Dr+Wx)/M ;
-    % rpm calculation
-    if gear==0 % shifting gears
-        rpm = rf*rg(gear_prev)*rp*v/Rt*60/2/pi ;
-        rpm_shift = shift_points(gear_prev) ;
-    else % gear change finished
-        rpm = rf*rg(gear)*rp*v/Rt*60/2/pi ;
-        rpm_shift = shift_points(gear) ;
-    end
-    % checking for gearshifts
-    if rpm>=rpm_shift && ~shifting % need to change gears
-        if gear==veh.nog % maximum gear number
-            % HUD
-            fprintf('Engine speed limited\t')
-            hud(v,a,rpm,gear,t,x,t_start,x_start)
-            break
-        else % higher gear available
-            % shifting condition
-            shifting = true ;
-            % shift initialisation time
-            t_shift = t ;
-            % zeroing  engine acceleration
-            ax = 0 ;
-            % saving previous gear
-            gear_prev = gear ;
-            % setting gear to neutral for duration of gearshift
-            gear = 0 ;
-        end
-    elseif shifting % currently shifting gears
-        % zeroing  engine acceleration
-        ax = 0 ;
-        % checking if gearshift duration has passed
-        if t-t_shift>veh.shift_time
-            % HUD
-            fprintf('%s%2d\t','Shifting to gear #',gear_prev+1)
-            hud(v,a,rpm,gear_prev+1,t,x,t_start,x_start)
-            % shifting condition
-            shifting = false ;
-            % next gear
-            gear = gear_prev+1 ;
-        end
-    else % no gearshift
-        % max long acc available from tyres
-        ax_tyre_max_acc = 1/M*(mux+dmx*(Nx-Wd))*Wd*veh.driven_wheels ;
-        % getting power limit from engine
-        engine_torque = interp1(rpm_curve,torque_curve,rpm) ;
-        wheel_torque = engine_torque*rf*rg(gear)*rp*nf*ng*np ;
-        ax_power_limit = 1/M*wheel_torque/Rt ;
-        % final long acc
-        ax = min([ax_power_limit,ax_tyre_max_acc]); 
-    end
+    % max long acc available from tyres
+    ax_tyre_max_acc = 1/M*(mux+dmx*(Nx-Wd))*Wd*veh.driven_wheels ;
+    % getting power limit from engine
+    engine_torque = interp1(rpm_curve,torque_curve,rpm) ;
+    wheel_torque = engine_torque*rf*rg(gear)*rp*nf*ng*np ;
+    ax_power_limit = 1/M*wheel_torque/Rt ;
+    % final long acc
+    ax = min([ax_power_limit,ax_tyre_max_acc]); 
     % tps
     tps = ax/ax_power_limit ;
     % longitudinal acceleration
@@ -289,23 +240,16 @@ while true
     % new velocity
     v = v+a*dt ;
     % new time
-    t = t+dt ;
+    t = t+dt; 
     % next iteration
     i = i+1 ;
 end
 i_acc = i ; % saving acceleration index
-% find event time
-for i=1:length(X)
-    if X(i) > 75
-        event_time = T(i); % record the time when the vehicle exceeds 75m
-        break
-    end
-end
 % average acceleration
 a_acc_ave = v/t ;
 disp(['Average acceleration:    ',num2str(a_acc_ave/9.81,'%6.3f'),' [G]'])
 disp(['Peak acceleration   :    ',num2str(max(A)/9.81,'%6.3f'),' [G]'])
-disp(['Acceleration event time: ',num2str(event_time, '%6.3f'), ' [s]'])
+disp(['Acceleration event time: ',num2str(t, '%6.3f'), ' [s]'])
 % acceleration timer
 toc(acceleration_timer)
 
@@ -331,7 +275,6 @@ disp('|_______Comment________|_Speed_|_Accel_|_EnRPM_|_Gear__|_Tabs__|_Xabs__|_T
 disp('|______________________|[km/h]_|__[G]__|_[rpm]_|__[#]__|__[s]__|__[m]__|__[s]__|_[m]__|')
 
 %% Deceleration
-
 while true
     % saving values
     MODE(i) = 2 ;
@@ -400,7 +343,7 @@ while true
     i = i+1 ;
 end
 % average deceleration
-a_dec_ave = V(i_acc)/(t-t_start) ;
+a_dec_ave = (V(i_acc)-v)/(t-t_start) ;
 disp(['Average deceleration:    ',num2str(a_dec_ave/9.81,'%6.3f'),' [G]'])
 disp(['Peak deceleration   :    ',num2str(-min(A)/9.81,'%6.3f'),' [G]'])
 % deceleration timer
