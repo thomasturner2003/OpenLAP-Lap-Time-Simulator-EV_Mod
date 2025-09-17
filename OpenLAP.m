@@ -42,7 +42,7 @@ tic
 %% Filenames
 
 trackfile = 'OpenTRACK Tracks/OpenTRACK_FSAE Skidpad_Closed_Forward.mat' ;
-vehiclefile = 'OpenVEHICLE Vehicles/OpenVEHICLE_OUR5_Open Wheel.mat' ;
+vehiclefile = 'OpenVEHICLE Vehicles/OpenVEHICLE_FS EV_Open Wheel.mat' ;
 
 %% Loading circuit
 

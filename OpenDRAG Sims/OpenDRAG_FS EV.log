@@ -5,28 +5,32 @@
                \____/ _  .___/\___//_/ /_//_____/ /_/ |_| /_/  |_\____/   
                       /_/                                                 
 =======================================================================================
-Vehicle: Formula 1 mod
-Date:    13/09/2025
-Time:    16:40:15
+Vehicle: FS EV
+Date:    17/09/2025
+Time:    08:51:09
 =======================================================================================
 Acceleration simulation started:
 Initial Speed: 0 km/h
 |_______Comment________|_Speed_|_Accel_|_EnRPM_|_Gear__|_Tabs__|_Xabs__|_Trel__|_Xrel_|
 |______________________|[km/h]_|__[G]__|_[rpm]_|__[#]__|__[s]__|__[m]__|__[s]__|_[m]__|
-Speed Trap #  1  50km/h   50.00	   0.35	   2813	      1	   3.86	  27.12	   3.86	  27.12
-Did not reach maximum speed at time 6.999 s
-Average acceleration:    0.350 [G]
-Peak acceleration   :    0.374 [G]
-Elapsed time is 0.041721 seconds.
+Speed Trap #  1  50km/h   50.03	   0.87	   2611	      1	   1.57	  11.01	   1.57	  11.01
+Speed Trap #  2 100km/h  100.00	   0.60	   5221	      1	   3.40	  49.90	   3.40	  49.90
+Engine speed limited	 114.92	   0.44	   6001	      1	   4.23	  74.58	   4.23	  74.58
+Average acceleration:    0.770 [G]
+Peak acceleration   :    0.923 [G]
+Acceleration event time: 4.226 [s]
+Elapsed time is 0.063949 seconds.
 ===============================================================================
 Deceleration simulation started:
-Initial Speed: 86.6119 [km/h]
+Initial Speed: 114.9186 [km/h]
 |_______Comment________|_Speed_|_Accel_|_EnRPM_|_Gear__|_Tabs__|_Xabs__|_Trel__|_Xrel_|
 |______________________|[km/h]_|__[G]__|_[rpm]_|__[#]__|__[s]__|__[m]__|__[s]__|_[m]__|
-Did not stop at time 6.999 s
-Average deceleration:    Inf [G]
-Peak deceleration   :    0.000 [G]
-Elapsed time is 0.001485 seconds.
+Speed Trap #  2 100km/h   99.96	  -1.62	   5222	      1	   4.48	  82.25	   0.26	   7.67
+Speed Trap #  1  50km/h   49.97	  -1.46	   2612	      1	   5.41	 101.40	   1.18	  26.82
+Stopped             	   0.00	  -1.41	      1	      1	   6.40	 108.23	   2.17	  33.65
+Average deceleration:    1.497 [G]
+Peak deceleration   :    1.682 [G]
+Elapsed time is 0.051072 seconds.
 ===============================================================================
 Simulation completed successfully.
-Elapsed time is 0.063606 seconds.
+Elapsed time is 0.157939 seconds.

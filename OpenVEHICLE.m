@@ -36,7 +36,7 @@ fclose('all') ;
 
 %% Vehicle file selection
 
-filename = 'OUR5.xlsx' ; % Cannot be open in excel to work
+filename = 'FS EV.xlsx' ; % Cannot be open in excel to work
 
 %% Reading vehicle file
 

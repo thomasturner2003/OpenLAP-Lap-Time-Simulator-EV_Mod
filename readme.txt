@@ -26,6 +26,18 @@ GitHub: https://github.com/mc12027
 
 April 2020.
 
+Open Source MATLAB EV Expansion project created by:
+
+Thomas Turner
+The University of Oxford MEng General Engineering
+
+LinkedIn: https://www.linkedin.com/in/thomas-turner-370604239/
+email: thomasturner2003@outlook.com
+GitHub: https://github.com/thomasturner2003
+September 2025.
+
+
+
 ===================================================================================================
 
 General OpenLAP usage instructions:
@@ -106,3 +118,9 @@ Instructions:
    "OpenLAP Sims". You can choose to include the date and time of each
    simulation in the result file name by changing the
    "use_date_time_in_name" variable to true.
+__________________________________________________________________________________________________
+EV Mod:
+Modified for use with power limited EVs.
+Added load transfer to OpenDRAG for more accurate simulation.
+Automatically derates torque from engine profile in order to not exceed a maximum power output.
+

@@ -29,7 +29,14 @@
 % MATLAB file exchange: https://uk.mathworks.com/matlabcentral/fileexchange/
 % GitHub: https://github.com/mc12027
 %
-% April 2020.
+% Open Source MATLAB EV Expansion project created by:
+% Thomas Turner
+% The University of Oxford MEng General Engineering
+%
+% LinkedIn: https://www.linkedin.com/in/thomas-turner-370604239/
+% email: thomasturner2003@outlook.com
+% GitHub: https://github.com/thomasturner2003
+% September 2025.
 
 %% Clearing memory
 
@@ -47,7 +54,7 @@ total_timer = tic ;
 %% Loading vehicle
 
 % filename
-vehiclefile = 'OpenVEHICLE Vehicles/OpenVEHICLE_OUR5_Open Wheel.mat' ;
+vehiclefile = 'OpenVEHICLE Vehicles/OpenVEHICLE_FS EV_Open Wheel.mat' ;
 
 %% Simulation settings
 
@@ -223,14 +230,56 @@ while x < 75
     Wd = Wd + (veh.M * veh.COG * a) / (veh.L*veh.driven_wheels);
     % drag acceleration
     ax_drag = (Aero_Dr+Roll_Dr+Wx)/M ;
-    % max long acc available from tyres
-    ax_tyre_max_acc = 1/M*(mux+dmx*(Nx-Wd))*Wd*veh.driven_wheels ;
-    % getting power limit from engine
-    engine_torque = interp1(rpm_curve,torque_curve,rpm) ;
-    wheel_torque = engine_torque*rf*rg(gear)*rp*nf*ng*np ;
-    ax_power_limit = 1/M*wheel_torque/Rt ;
-    % final long acc
-    ax = min([ax_power_limit,ax_tyre_max_acc]); 
+    % rpm calculation
+    if gear==0 % shifting gears
+        rpm = rf*rg(gear_prev)*rp*v/Rt*60/2/pi ;
+        rpm_shift = shift_points(gear_prev) ;
+    else % gear change finished
+        rpm = rf*rg(gear)*rp*v/Rt*60/2/pi ;
+        rpm_shift = shift_points(gear) ;
+    end
+    % checking for gearshifts
+    if rpm>=rpm_shift && ~shifting % need to change gears
+        if gear==veh.nog % maximum gear number
+            % HUD
+            fprintf('Engine speed limited\t')
+            hud(v,a,rpm,gear,t,x,t_start,x_start)
+            break
+        else % higher gear available
+            % shifting condition
+            shifting = true ;
+            % shift initialisation time
+            t_shift = t ;
+            % zeroing  engine acceleration
+            ax = 0 ;
+            % saving previous gear
+            gear_prev = gear ;
+            % setting gear to neutral for duration of gearshift
+            gear = 0 ;
+        end
+    elseif shifting % currently shifting gears
+        % zeroing  engine acceleration
+        ax = 0 ;
+        % checking if gearshift duration has passed
+        if t-t_shift>veh.shift_time
+            % HUD
+            fprintf('%s%2d\t','Shifting to gear #',gear_prev+1)
+            hud(v,a,rpm,gear_prev+1,t,x,t_start,x_start)
+            % shifting condition
+            shifting = false ;
+            % next gear
+            gear = gear_prev+1 ;
+        end
+    else % no gearshift
+        % max long acc available from tyres
+        ax_tyre_max_acc = 1/M*(mux+dmx*(Nx-Wd))*Wd*veh.driven_wheels ;
+        % getting power limit from engine
+        engine_torque = interp1(rpm_curve,torque_curve,rpm) ;
+        wheel_torque = engine_torque*rf*rg(gear)*rp*nf*ng*np ;
+        ax_power_limit = 1/M*wheel_torque/Rt ;
+        % final long acc
+        ax = min([ax_power_limit,ax_tyre_max_acc]) ;
+    end
     % tps
     tps = ax/ax_power_limit ;
     % longitudinal acceleration
@@ -458,6 +507,7 @@ title('Engine Speed')
 xlabel('Distance [m]')
 ylabel('Engine Speed [rpm]')
 plot(X,RPM)
+
 
 % gear
 i = i+1 ;
